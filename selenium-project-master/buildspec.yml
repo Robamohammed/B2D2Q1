@@ -1,0 +1,31 @@
+version: 0.2
+
+phases:
+  install:
+    on-failure: ABORT
+    runtime-versions:
+      java: corretto11
+    commands:
+    - sh install_driver.sh
+  pre_build:
+    on-failure: ABORT
+    commands:
+    - echo Build start on 'date'
+    - echo Build ends on 'date'
+  build:
+    on-failure: ABORT
+    commands:
+    - echo Build start on 'date'
+    - mvn test
+    - echo Build ends on 'date'
+  post_build:
+    on-failure: ABORT
+    commands:
+    - echo Build start on 'date'
+    - mv reports/test-report.html test-report.html
+    - echo Build ends on 'date'
+
+artifacts:
+  files:
+    - test-report.html
+  name: hello-world-artifact
